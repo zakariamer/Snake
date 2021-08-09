@@ -7,7 +7,6 @@ import SwingShapes.Ellipse;
 
 public class Segment {
 	private Ellipse segment;
-	private Direction direction;
 	
 	public Segment(int startXLocation, int startYLocation, Color color) {
 		segment = new Ellipse();
@@ -20,24 +19,8 @@ public class Segment {
 		return segment.getXLocation();
 	}
 
-	public void setXLocation(int locationX) {
-		segment.setLocation(locationX, segment.getYLocation());
-	}
-
 	public int getYLocation() {
 		return segment.getYLocation();
-	}
-
-	public void setYLocation(int locationY) {
-		segment.setLocation(segment.getXLocation(), locationY);
-	}
-	
-	public Direction getDirection() {
-		return direction;
-	}
-	
-	public void setDirection(Direction direction) {
-		this.direction = direction;
 	}
 	
 	public void setColor(Color color) {

@@ -11,7 +11,7 @@ public class Pellet {
 	public Pellet() {
 		pellet = new Ellipse();
 		pellet.setColor(Color.red);
-		pellet.setSize(20,  20);
+		pellet.setSize(20, 20);
 	}
 	
 	public int getXLocation() {

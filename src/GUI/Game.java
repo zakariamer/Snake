@@ -27,14 +27,15 @@ public class Game extends JPanel {
 	private Direction nextDirection = null;
 	private int numberOfRows;
 	private int numberOfColumns;
+	private int speed = 4;
+	private int movementDelay = 10;
+	private int movementCounter;
 
 	public Game() {
 		Window.setTitle("Snake");
 		setDoubleBuffered(true);
 
-		snake = new Snake();
-		snake.setXLocation(180);
-		snake.setYLocation(300);
+		snake = new Snake(180, 300);
 		
 		pellet = new Pellet();
 		
@@ -49,8 +50,11 @@ public class Game extends JPanel {
 					}
 				}
 				
-				snake.update();
-				
+				if (movementCounter >= movementDelay) {
+					snake.update();
+					movementCounter = 0;
+				}
+								
 				if (snake.getXLocation() == pellet.getXLocation() && snake.getYLocation() == pellet.getYLocation()) {
 					Point newPelletLocation = getRandomGridCoords();
 					pellet.setXLocation(newPelletLocation.x * GRID_SIZE);
@@ -58,10 +62,13 @@ public class Game extends JPanel {
 					snake.addSegment();
 				}
 				
+				movementCounter++;
+				
 				repaint();
 			}
 		});
 
+		
 		this.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {

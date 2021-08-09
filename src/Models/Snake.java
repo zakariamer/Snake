@@ -7,93 +7,87 @@ import java.util.LinkedList;
 import SwingShapes.Ellipse;
 
 public class Snake {
-	private int xLocation;
-	private int yLocation;
-	private Ellipse head;
 	private LinkedList<Segment> segments = new LinkedList<Segment>();
 	private Direction direction;
 	private int speed;
-	
-	public Snake() {
+
+	public Snake(int startXLocation, int startYLocation) {
 		direction = Direction.UP;
-		head = new Ellipse();
-		head.setColor(Color.green);
-		head.setSize(20,  20);
-		speed = 4;
+		segments.add(new Segment(startXLocation, startYLocation, Color.green));
 	}
 
 	public int getXLocation() {
-		return head.getXLocation();
+		return segments.get(0).getXLocation();
 	}
 
 	public void setXLocation(int locationX) {
-		head.setLocation(locationX, head.getYLocation());
+		segments.get(0).setXLocation(locationX);
 	}
 
 	public int getYLocation() {
-		return head.getYLocation();
+		return segments.get(0).getYLocation();
 	}
 
 	public void setYLocation(int locationY) {
-		head.setLocation(head.getXLocation(), locationY);
+		segments.get(0).setYLocation(locationY);
 	}
-	
+
 	public void addSegment() {
-		segments.add(new Segment());
+		Segment tail = segments.get(segments.size() - 1);
+		switch (direction) {
+			case LEFT:
+				segments.add(new Segment(tail.getXLocation() - 20, tail.getYLocation(), new Color(0, 130, 255)));
+				break;
+			case RIGHT:
+				segments.add(new Segment(tail.getXLocation() + 20, tail.getYLocation(), new Color(0, 130, 255)));
+				break;
+			case UP:
+				segments.add(new Segment(tail.getXLocation(), tail.getYLocation() - 20, new Color(0, 130, 255)));
+				break;
+			case DOWN:
+				segments.add(new Segment(tail.getXLocation(), tail.getYLocation() + 20, new Color(0, 130, 255)));
+				break;
+			}
 	}
-	
+
 	public Direction getDirection() {
 		return direction;
 	}
-	
+
 	public void setDirection(Direction direction) {
 		this.direction = direction;
 	}
-	
+
 	public int getSpeed() {
 		return speed;
 	}
-	
-//	public void right() {
-//		if (direction != Direction.LEFT) {
-//			direction =  Direction.RIGHT;
-//		}
-//	}
-//	
-//	public void left() {
-//		if (direction != Direction.RIGHT) {
-//			direction =  Direction.LEFT;
-//		}
-//	}
-//	
-//	public void up() {
-//		if (direction != Direction.DOWN) {
-//			direction =  Direction.UP;
-//		}
-//	}
-//	
-//	public void down() {
-//		if (direction != Direction.UP) {
-//			direction =  Direction.DOWN;
-//		}
-//	}
 
-	
 	public void update() {
+		Segment head = segments.get(0);
+		head.setColor(new Color(0, 130, 255));
+		segments.remove(segments.size() - 1);
+		int newXLocation = head.getXLocation();
+		int newYLocation = head.getYLocation();
 		switch (direction) {
 			case LEFT:
+				newXLocation -= 20;
+				break;
 			case RIGHT:
-				head.setLocation(head.getXLocation() + direction.getVelocity() * speed, head.getYLocation());
+				newXLocation += 20;
 				break;
 			case UP:
-			case DOWN:
-				head.setLocation(head.getXLocation(), head.getYLocation() + direction.getVelocity() * speed);
+				newYLocation -= 20;
 				break;
-
+			case DOWN:
+				newYLocation += 20;
+				break;
 		}
+		segments.add(0, new Segment(newXLocation, newYLocation, Color.green));
 	}
-	
+
 	public void draw(Graphics2D g) {
-		head.paint(g);
+		for (Segment segment : segments) {
+			segment.draw(g);
+		}
 	}
 }

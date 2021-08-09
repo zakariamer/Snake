@@ -6,6 +6,7 @@ public class Main {
         new Window();
         Game game = new Game();
         Window.setContentPane(game);
+        Window.setResizeable(false);
         game.startGame();
     }
 }

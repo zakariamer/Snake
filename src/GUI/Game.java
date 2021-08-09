@@ -3,24 +3,30 @@ package GUI;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.Random;
 
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
 import GUIControls.Window;
 import Models.Direction;
+import Models.Pellet;
 import Models.Snake;
 
 public class Game extends JPanel {
 	private Timer timer;
 	private Snake snake;
+	private Pellet pellet;
 	private final int GRID_SIZE = 20;
 	private Direction nextDirection = null;
+	private int numberOfRows;
+	private int numberOfColumns;
 
 	public Game() {
 		Window.setTitle("Snake");
@@ -29,6 +35,9 @@ public class Game extends JPanel {
 		snake = new Snake();
 		snake.setXLocation(180);
 		snake.setYLocation(300);
+		
+		pellet = new Pellet();
+		
 		timer = new Timer(1, new ActionListener() {
 
 			@Override
@@ -39,7 +48,16 @@ public class Game extends JPanel {
 						nextDirection = null;
 					}
 				}
+				
 				snake.update();
+				
+				if (snake.getXLocation() == pellet.getXLocation() && snake.getYLocation() == pellet.getYLocation()) {
+					Point newPelletLocation = getRandomGridCoords();
+					pellet.setXLocation(newPelletLocation.x * GRID_SIZE);
+					pellet.setYLocation(newPelletLocation.y * GRID_SIZE);
+					snake.addSegment();
+				}
+				
 				repaint();
 			}
 		});
@@ -76,6 +94,13 @@ public class Game extends JPanel {
 	}
 
 	public void startGame() {
+		numberOfRows = this.getHeight() / GRID_SIZE;
+		numberOfColumns = this.getWidth() / GRID_SIZE;
+		
+		Point pelletStartLocation = getRandomGridCoords();
+		pellet.setXLocation(pelletStartLocation.x * GRID_SIZE);
+		pellet.setYLocation(pelletStartLocation.y * GRID_SIZE);
+		
 		timer.start();
 	}
 
@@ -85,22 +110,26 @@ public class Game extends JPanel {
 		Graphics2D brush = (Graphics2D) g;
 		drawGrid(brush);
 		snake.draw(brush);
+		pellet.draw(brush);
 	}
 
 	private void drawGrid(Graphics2D g) {
 		Color oldColor = g.getColor();
-		int numberOfRows = this.getWidth() / GRID_SIZE;
-		int numberOfColumns = this.getHeight() / GRID_SIZE;
-		int counter = 0;
-		for (int i = 0; i < numberOfColumns; i++) {
-			for (int j = 0; j < numberOfRows; j++) {
-				Color gridColor = counter % 2 == 0 ? Color.black : Color.white;
+		int incrementTracker = 0;
+		for (int i = 0; i < numberOfRows; i++) {
+			for (int j = 0; j < numberOfColumns; j++) {
+				Color gridColor = j % 2 == incrementTracker ? Color.black : Color.white;
 				g.setColor(gridColor);
 				g.fillRect(j * GRID_SIZE, i * GRID_SIZE, GRID_SIZE, GRID_SIZE);
-				counter++;
 			}
+			incrementTracker = incrementTracker == 0 ? 1 : 0;
 		}
 		g.setColor(oldColor);
+	}
+	
+	private Point getRandomGridCoords() {
+		Random random = new Random();
+		return new Point(random.nextInt(numberOfColumns), random.nextInt(numberOfRows));
 	}
 
 }

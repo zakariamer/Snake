@@ -19,7 +19,7 @@ public class Snake {
 		head = new Ellipse();
 		head.setColor(Color.green);
 		head.setSize(20,  20);
-		speed = 5;
+		speed = 4;
 	}
 
 	public int getXLocation() {
@@ -39,7 +39,7 @@ public class Snake {
 	}
 	
 	public void addSegment() {
-		
+		segments.add(new Segment());
 	}
 	
 	public Direction getDirection() {

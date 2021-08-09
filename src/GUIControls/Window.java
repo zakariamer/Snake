@@ -23,6 +23,10 @@ public class Window {
         window.setSize(width, height);
         window.setLocationRelativeTo(null);
     }
+    
+    public static void setResizeable(boolean isResizeable) {
+    	window.setResizable(isResizeable);
+    }
 
     public static void setContentPane(JPanel panel) {
         window.getContentPane().removeAll();

@@ -34,7 +34,7 @@ public class Game extends JPanel {
 		Window.setTitle("Snake");
 		setDoubleBuffered(true);
 
-		snake = new Snake(180, 300);
+		snake = new Snake(180, 300, GRID_SIZE);
 
 		pellet = new Pellet();
 
@@ -46,7 +46,7 @@ public class Game extends JPanel {
 					if (nextDirection != null) {
 						snake.setDirection(nextDirection);
 					}
-					snake.update();
+					snake.move();
 					movementDelayCounter = 0;
 					nextDirection = null;
 				}

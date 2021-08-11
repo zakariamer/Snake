@@ -7,10 +7,12 @@ import java.util.LinkedList;
 public class Snake {
 	private LinkedList<Segment> segments = new LinkedList<Segment>();
 	private Direction direction;
+	private int movementAmount;
 
-	public Snake(int startXLocation, int startYLocation) {
+	public Snake(int startXLocation, int startYLocation, int movementAmount) {
 		direction = Direction.UP;
 		segments.add(new Segment(startXLocation, startYLocation, Color.green));
+		this.movementAmount = movementAmount;
 	}
 
 	public int getXLocation() {
@@ -33,16 +35,16 @@ public class Snake {
 		Segment tail = segments.get(segments.size() - 1);
 		switch (direction) {
 			case LEFT:
-				segments.add(new Segment(tail.getXLocation() + 20, tail.getYLocation(), new Color(0, 130, 255)));
+				segments.add(new Segment(tail.getXLocation() + movementAmount, tail.getYLocation(), new Color(0, 130, 255)));
 				break;
 			case RIGHT:
-				segments.add(new Segment(tail.getXLocation() - 20, tail.getYLocation(), new Color(0, 130, 255)));
+				segments.add(new Segment(tail.getXLocation() - movementAmount, tail.getYLocation(), new Color(0, 130, 255)));
 				break;
 			case UP:
-				segments.add(new Segment(tail.getXLocation(), tail.getYLocation() + 20, new Color(0, 130, 255)));
+				segments.add(new Segment(tail.getXLocation(), tail.getYLocation() + movementAmount, new Color(0, 130, 255)));
 				break;
 			case DOWN:
-				segments.add(new Segment(tail.getXLocation(), tail.getYLocation() - 20, new Color(0, 130, 255)));
+				segments.add(new Segment(tail.getXLocation(), tail.getYLocation() - movementAmount, new Color(0, 130, 255)));
 				break;
 		}
 	}
@@ -58,7 +60,7 @@ public class Snake {
 		return false;
 	}
 
-	public void update() {
+	public void move() {
 		Segment head = segments.get(0);
 		head.setColor(new Color(0, 130, 255));
 		segments.remove(segments.size() - 1);
@@ -66,16 +68,16 @@ public class Snake {
 		int newYLocation = head.getYLocation();
 		switch (direction) {
 			case LEFT:
-				newXLocation -= 20;
+				newXLocation -= movementAmount;
 				break;
 			case RIGHT:
-				newXLocation += 20;
+				newXLocation += movementAmount;
 				break;
 			case UP:
-				newYLocation -= 20;
+				newYLocation -= movementAmount;
 				break;
 			case DOWN:
-				newYLocation += 20;
+				newYLocation += movementAmount;
 				break;
 		}
 		segments.add(0, new Segment(newXLocation, newYLocation, Color.green));

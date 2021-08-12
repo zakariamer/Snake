@@ -29,9 +29,6 @@ public class Pellet {
 	public void setYLocation(int locationY) {
 		pellet.setLocation(pellet.getXLocation(), locationY);
 	}	
-	public void update() {
-		
-	}
 	
 	public void draw(Graphics2D g) {
 		pellet.paint(g);

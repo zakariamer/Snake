@@ -8,7 +8,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.util.Random;
 
 import javax.swing.JPanel;
@@ -27,7 +26,7 @@ public class Game extends JPanel {
 	private Direction nextDirection = Direction.UP;
 	private int numberOfRows;
 	private int numberOfColumns;
-	private final int MOVEMENT_DELAY = 10;
+	private final int MOVEMENT_DELAY = 7; // higher value == snake moves slower
 	private int movementDelayCounter;
 
 	public Game() {
@@ -43,22 +42,28 @@ public class Game extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (movementDelayCounter >= MOVEMENT_DELAY) {
+					// change snake direction
 					if (nextDirection != null) {
 						snake.setDirection(nextDirection);
 					}
+					
+					// move snake
 					snake.move();
 					movementDelayCounter = 0;
 					nextDirection = null;
 				}
 				
+				// if snake hits screen boundaries, game over
 				if (snake.getXLocation() < 0 || snake.getXLocation() > getWidth() || snake.getYLocation() < 0 || snake.getYLocation() > getHeight()) {
 					System.exit(1);
 				}
 				
+				// if snake hits its own tail, game over
 				if (snake.hasCollidedWithTail()) {
 					System.exit(1);
 				}
 
+				// if snake gets pellet, move pellet to new random location and add segment to snake's tail
 				if (snake.getXLocation() == pellet.getXLocation() && snake.getYLocation() == pellet.getYLocation()) {
 					Point newPelletLocation = getRandomGridCoords();
 					pellet.setXLocation(newPelletLocation.x * GRID_SIZE);
@@ -103,7 +108,6 @@ public class Game extends JPanel {
 		});
 
 		this.setFocusable(true);
-
 	}
 
 	public void startGame() {

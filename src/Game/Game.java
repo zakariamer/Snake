@@ -1,6 +1,7 @@
 package Game;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -43,6 +44,7 @@ public class Game extends JPanel {
 			// this game loop method will continuously run over and over again
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				// if enough time has gone by, snake will move one grid space in a direction based on the key pressed
 				if (movementDelayCounter >= MOVEMENT_DELAY) {
 					// change snake direction
 					if (nextDirection != null) {
@@ -51,6 +53,7 @@ public class Game extends JPanel {
 					
 					// move snake
 					snake.move();
+
 					movementDelayCounter = 0;
 					nextDirection = null;
 				}
@@ -65,7 +68,7 @@ public class Game extends JPanel {
 					System.exit(1);
 				}
 
-				// if snake gets pellet, move pellet to new random location and add segment to snake's tail
+				// if snake gets pellet, move pellet to new random location and add new segment on to snake's tail
 				if (snake.getXLocation() == pellet.getXLocation() && snake.getYLocation() == pellet.getYLocation()) {
 					Point newPelletLocation = getRandomGridCoords();
 					pellet.setXLocation(newPelletLocation.x * GRID_SIZE);
@@ -84,21 +87,25 @@ public class Game extends JPanel {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if (nextDirection == null) {
+					// if A Key was pressed
 					if (e.getKeyCode() == KeyEvent.VK_A) {
 						if (snake.getDirection() == Direction.UP || snake.getDirection() == Direction.DOWN) {
 							nextDirection = Direction.LEFT;
 						}
 					}
+					 // if D Key was pressed
 					if (e.getKeyCode() == KeyEvent.VK_D) {
 						if (snake.getDirection() == Direction.UP || snake.getDirection() == Direction.DOWN) {
 							nextDirection = Direction.RIGHT;
 						}
 					}
+					// if W Key was pressed
 					if (e.getKeyCode() == KeyEvent.VK_W) {
 						if (snake.getDirection() == Direction.LEFT || snake.getDirection() == Direction.RIGHT) {
 							nextDirection = Direction.UP;
 						}
 					}
+					// if S Key was pressed
 					if (e.getKeyCode() == KeyEvent.VK_S) {
 						if (snake.getDirection() == Direction.LEFT || snake.getDirection() == Direction.RIGHT) {
 							nextDirection = Direction.DOWN;
@@ -115,9 +122,11 @@ public class Game extends JPanel {
 
 	// initializes game and starts game loop timer
 	public void startGame() {
+		// sets grid size based on width/height of the window
 		numberOfRows = this.getHeight() / GRID_SIZE;
 		numberOfColumns = this.getWidth() / GRID_SIZE;
 
+		// places pellet in a random location to start
 		Point pelletStartLocation = getRandomGridCoords();
 		pellet.setXLocation(pelletStartLocation.x * GRID_SIZE);
 		pellet.setYLocation(pelletStartLocation.y * GRID_SIZE);
@@ -128,21 +137,31 @@ public class Game extends JPanel {
 		this.grabFocus();
 	}
 	
+	// gets a random location in the grid
 	private Point getRandomGridCoords() {
 		Random random = new Random();
 		return new Point(random.nextInt(numberOfColumns), random.nextInt(numberOfRows));
 	}
 
-	// graphics are drawn here
+	// graphics are painted to the screen here
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
+
+		// create a Graphics2D brush to allow for painting grpahics to the screen
 		Graphics2D brush = (Graphics2D) g;
+
 		drawGrid(brush);
 		snake.draw(brush);
 		pellet.draw(brush);
+
+		// draw text "Created by" in bottom right corner
+		brush.setColor(Color.black);
+		brush.setFont(new Font("Arial", 0, 10));
+		brush.drawString("Created by: ARTech Industries", getWidth() - 146, getHeight() - 5);
 	}
 
+	// paints the grid graphics to the screen
 	private void drawGrid(Graphics2D g) {
 		Color oldColor = g.getColor();
 		int incrementTracker = 0;

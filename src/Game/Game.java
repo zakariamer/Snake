@@ -37,8 +37,10 @@ public class Game extends JPanel {
 
 		pellet = new Pellet();
 
+		// game loop
 		timer = new Timer(1, new ActionListener() {
 
+			// this game loop method will continuously run over and over again
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (movementDelayCounter >= MOVEMENT_DELAY) {
@@ -77,6 +79,7 @@ public class Game extends JPanel {
 			}
 		});
 
+		// detects keyboard key presses
 		this.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
@@ -110,6 +113,7 @@ public class Game extends JPanel {
 		this.setFocusable(true);
 	}
 
+	// initializes game and starts game loop timer
 	public void startGame() {
 		numberOfRows = this.getHeight() / GRID_SIZE;
 		numberOfColumns = this.getWidth() / GRID_SIZE;
@@ -118,7 +122,10 @@ public class Game extends JPanel {
 		pellet.setXLocation(pelletStartLocation.x * GRID_SIZE);
 		pellet.setYLocation(pelletStartLocation.y * GRID_SIZE);
 
+		// game loop starts iterating here
 		timer.start();
+		
+		this.grabFocus();
 	}
 	
 	private Point getRandomGridCoords() {
@@ -126,6 +133,7 @@ public class Game extends JPanel {
 		return new Point(random.nextInt(numberOfColumns), random.nextInt(numberOfRows));
 	}
 
+	// graphics are drawn here
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);

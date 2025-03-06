@@ -4,11 +4,14 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.LinkedList;
 
+import org.w3c.dom.Text;
+
 public class Snake {
 	private LinkedList<Segment> segments = new LinkedList<Segment>();
 	private Direction direction;
 	private int movementAmount;
 	private boolean isHead;
+	public static int score = 0;
 
 	public Snake(int startXLocation, int startYLocation, int movementAmount, boolean isHead) {
 		direction = Direction.UP;
@@ -34,6 +37,9 @@ public class Snake {
 	
 	public void addSegment() {
 		Segment tail = segments.get(segments.size() - 1);
+		score = segments.size() - 1;
+
+
 		switch (direction) {
 			case LEFT:
 				segments.add(new Segment(tail.getXLocation() + movementAmount, tail.getYLocation(), isHead));
@@ -51,6 +57,7 @@ public class Snake {
 	}
 	
 	public boolean hasCollidedWithTail() {
+
 		Segment head = segments.get(0);
 		for (int i = 1; i < segments.size(); i++) {
 			Segment next = segments.get(i);

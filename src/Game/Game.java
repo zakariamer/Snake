@@ -162,6 +162,10 @@ public class Game extends JPanel {
 		brush.setColor(Color.black);
 		brush.setFont(new Font("Arial", 0, 10));
 		brush.drawString("Created by: ARTech Industries", getWidth() - 146, getHeight() - 5);
+
+		brush.setFont(new Font("Arial", 0, 50));
+		brush.setColor(Color.BLUE);
+		brush.drawString(Snake.score + "", getWidth() - 100, getHeight() - 505);
 	}
 
 	// paints the grid graphics to the screen

@@ -1,6 +1,9 @@
 package GUIControls;
 
 import javax.swing.*;
+
+import org.w3c.dom.Text;
+
 import java.awt.*;
 
 public class Window {
@@ -13,6 +16,7 @@ public class Window {
         window.setLocationRelativeTo(null);
         window.setVisible(true);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
     }
 
     public static void setTitle(String title) {

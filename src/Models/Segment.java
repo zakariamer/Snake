@@ -9,7 +9,7 @@ public class Segment {
 	private Rectangle segment;
 	
 	public Segment(int startXLocation, int startYLocation, boolean isHead) {
-		segment = new Ellipse();
+		segment = new Rectangle();
 		if(isHead){
 			segment.setColor(new Color(0,0,225)); //head segment color (bright blue)
 		}else{

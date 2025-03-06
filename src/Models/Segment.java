@@ -8,9 +8,14 @@ import SwingShapes.Rectangle;
 public class Segment {
 	private Rectangle segment;
 	
-	public Segment(int startXLocation, int startYLocation, Color color) {
-		segment = new Rectangle();
-		segment.setColor(color);
+	public Segment(int startXLocation, int startYLocation, boolean isHead) {
+		segment = new Ellipse();
+		if(isHead){
+			segment.setColor(new Color(0,0,225)); //head segment color (bright blue)
+		}else{
+			segment.setColor(new Color(0,0,139));	//tail segment color(dark blue)
+		}
+
 		segment.setSize(20,  20);
 		segment.setLocation(startXLocation, startYLocation);
 	}

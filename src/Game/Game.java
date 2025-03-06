@@ -35,6 +35,7 @@ public class Game extends JPanel {
 		setDoubleBuffered(true);
 
 		snake = new Snake(180, 300, GRID_SIZE);
+		snake.addSegment();
 
 		pellet = new Pellet();
 

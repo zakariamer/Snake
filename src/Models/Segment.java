@@ -3,10 +3,10 @@ package Models;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-import SwingShapes.Ellipse;
+import SwingShapes.Rectangle;
 
 public class Segment {
-	private Ellipse segment;
+	private Rectangle segment;
 	
 	public Segment(int startXLocation, int startYLocation, boolean isHead) {
 		segment = new Ellipse();
@@ -15,7 +15,7 @@ public class Segment {
 		}else{
 			segment.setColor(new Color(0,0,139));	//tail segment color(dark blue)
 		}
-		
+
 		segment.setSize(20,  20);
 		segment.setLocation(startXLocation, startYLocation);
 	}

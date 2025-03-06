@@ -18,6 +18,7 @@ import GUIControls.Window;
 import Models.Direction;
 import Models.Pellet;
 import Models.Snake;
+import Models.Segment;
 
 public class Game extends JPanel {
 	private Timer timer;
@@ -29,12 +30,13 @@ public class Game extends JPanel {
 	private int numberOfColumns;
 	private final int MOVEMENT_DELAY = 7; // higher value == snake moves slower
 	private int movementDelayCounter;
+	
 
 	public Game() {
 		Window.setTitle("Snake");
 		setDoubleBuffered(true);
 
-		snake = new Snake(180, 300, GRID_SIZE);
+		snake = new Snake(180, 300, GRID_SIZE,true);
 
 		pellet = new Pellet();
 

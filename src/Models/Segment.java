@@ -8,9 +8,14 @@ import SwingShapes.Ellipse;
 public class Segment {
 	private Ellipse segment;
 	
-	public Segment(int startXLocation, int startYLocation, Color color) {
+	public Segment(int startXLocation, int startYLocation, boolean isHead) {
 		segment = new Ellipse();
-		segment.setColor(color);
+		if(isHead){
+			segment.setColor(new Color(0,0,225)); //head segment color (bright blue)
+		}else{
+			segment.setColor(new Color(0,0,139));	//tail segment color(dark blue)
+		}
+		
 		segment.setSize(20,  20);
 		segment.setLocation(startXLocation, startYLocation);
 	}
